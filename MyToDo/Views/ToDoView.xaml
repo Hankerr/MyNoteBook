@@ -5,76 +5,118 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MyToDo.Views"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    <md:DialogHost>
+        <md:DrawerHost IsRightDrawerOpen="{Binding IsRightDrawerOpen}">
+            <md:DrawerHost.RightDrawerContent>
+                <DockPanel Width="300" LastChildFill="False">
+                    <TextBlock 
+                        Padding="20,10"
+                        Text="添加待办" 
+                        FontSize="20" 
+                        FontWeight="Bold" 
+                        DockPanel.Dock="Top"/>
+                    
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="20">
+                        <TextBlock Text="状态：" VerticalAlignment="Center"/>
+                        <ComboBox>
+                            <ComboBoxItem>待办</ComboBoxItem>
+                            <ComboBoxItem>已完成</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <TextBox
+                        Margin="20,0" 
+                        md:HintAssist.Hint="请输入待办概要" 
+                        DockPanel.Dock="Top"/>
+                    <TextBox 
+                        Margin="20" 
+                        MinHeight="100"
+                        md:HintAssist.Hint="请输入待办内容" 
+                        DockPanel.Dock="Top"/>
+                    <Button
+                        Margin="20"
+                        Content="添加到待办" 
+                        DockPanel.Dock="Top"/>
+                </DockPanel>
+            </md:DrawerHost.RightDrawerContent>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-        <StackPanel Margin="15,0,0,0" Orientation="Horizontal">
-            <TextBlock 
+                <StackPanel Margin="15,0,0,0" Orientation="Horizontal">
+                    <TextBox 
                 VerticalAlignment="Center"
                 Width="250" 
                 md:HintAssist.Hint="查找待办事项..."
                 md:TextFieldAssist.HasClearButton="True"/>
-            <TextBlock 
-                Text="筛选" 
+                    <TextBlock 
+                Text="筛选:" 
                 Margin="10,0" 
                 VerticalAlignment="Center"/>
-            <ComboBox 
+                    <ComboBox 
                 SelectedIndex="0" 
                 VerticalAlignment="Center">
-                <ComboBoxItem>全部</ComboBoxItem>
-                <ComboBoxItem>待办</ComboBoxItem>
-                <ComboBoxItem>已完成</ComboBoxItem>
-            </ComboBox>
-        </StackPanel>
-        <Button 
-            Margin="10,5" 
-            HorizontalAlignment="Right"
-            Content="+ 添加待办"/>
+                        <ComboBoxItem>全部</ComboBoxItem>
+                        <ComboBoxItem>待办</ComboBoxItem>
+                        <ComboBoxItem>已完成</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
 
-        <ItemsControl 
-            Grid.Row="1" 
-            ItemsSource="{Binding ToDoDtos}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel></WrapPanel>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+                <Button 
+                    Margin="10,5" 
+                    HorizontalAlignment="Right"
+                    Command="{Binding AddCommand}"
+                    Content="+ 添加待办"/>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid Width="20" MinHeight="180" MaxHeight="250">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                <ItemsControl Grid.Row="1" HorizontalAlignment="Center" ItemsSource="{Binding ToDoDtos}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-                        <TextBlock Text="{Binding Title}"/>
-                        <TextBlock Text="{Binding Content}" Grid.Row="1"/>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="220" MinHeight="180" MaxHeight="250" Margin="8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
-                        <Canvas Grid.RowSpan="2" ClipToBounds="True">
-                            <Border Canvas.Top="10" 
+                                <md:PopupBox HorizontalAlignment="Right" Panel.ZIndex="1">
+                                    <Button Content="删除"/>
+                                </md:PopupBox>
+
+                                <Border CornerRadius="3" Grid.RowSpan="2" Background="Gray"/>
+
+                                <TextBlock Padding="10,5" FontWeight="Bold" Text="{Binding Title}"/>
+                                <TextBlock Padding="10,5" Text="{Binding Content}" Grid.Row="1"/>
+                                <Canvas Grid.RowSpan="2" ClipToBounds="True">
+                                    <Border Canvas.Top="10" 
                                         Canvas.Right="-50"
                                         Width="120" 
                                         Height="120"
                                         CornerRadius="100"
                                         Background="#FFFFFF"
                                         Opacity="0.1"/>
-                            <Border Canvas.Top="80" 
+                                    <Border Canvas.Top="80" 
                                         Canvas.Right="-30"
                                         Width="120" 
                                         Height="120"
                                         CornerRadius="100"
                                         Background="#FFFFFF"
                                         Opacity="0.1"/>
-                        </Canvas>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Grid>
+                                </Canvas>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </md:DrawerHost>
+        
+    </md:DialogHost>
 </UserControl>
