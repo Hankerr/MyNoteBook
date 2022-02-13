@@ -1,13 +1,12 @@
-﻿using Prism.Mvvm;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyToDo.Common
+namespace MyToDo.Common.Models
 {
-    public class BaseDto : BindableBase
+    public class BaseDto
     {
         private int id;
 
@@ -25,5 +24,12 @@ namespace MyToDo.Common
             set { createDate = value; }
         }
 
+        private DateTime updateDate;
+
+        public DateTime UpdateDate
+        {
+            get { return updateDate; }
+            set { updateDate = value; }
+        }
     }
 }

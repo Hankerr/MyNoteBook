@@ -1,4 +1,5 @@
 ﻿using MyToDo.Common;
+using MyToDo.Common.Models;
 using MyToDo.Extensions;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -18,7 +19,7 @@ namespace MyToDo.ViewModels
         {
             MenuBars = new ObservableCollection<MenuBar>();
             CreateMenuBar();
-            NavigateCommand = new DelegateCommand<MenuBar>(Navigite);
+            NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
             GoBackCommand = new DelegateCommand(() =>
             {
@@ -36,7 +37,7 @@ namespace MyToDo.ViewModels
             });
         }
 
-        private void Navigite(MenuBar obj)
+        private void Navigate(MenuBar obj)
         {
             if (obj == null || string.IsNullOrWhiteSpace(obj.NameSpace))
             {

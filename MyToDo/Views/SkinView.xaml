@@ -3,9 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesignColors="clr-namespace:MaterialDesignColors;assembly=MaterialDesignColors"
+             xmlns:converters="clr-namespace:MyToDo.Common.Converters"
              xmlns:local="clr-namespace:MyToDo.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+        <DataTemplate DataType="{x:Type Color}" x:Key="SwatchColorTemplate">
+            <Button
+                    Height="40"
+                    Width="40"
+                    Background="{Binding Converter={StaticResource ColorToBrushConverter}}" 
+                    Command="{Binding DataContext.ChangeHueCommand, RelativeSource={RelativeSource AncestorType=local:SkinView}}" 
+                    CommandParameter="{Binding}">
+            </Button>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -14,10 +28,26 @@
 
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="浅色"/>
-            <ToggleButton/>
+            <ToggleButton Margin="8,0,16,0" IsChecked="{Binding IsDarkTheme}"/>
             <TextBlock Text="深色"/>
         </StackPanel>
-        
-        
+
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Swatches}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type materialDesignColors:ISwatch}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" Width="80"/>
+                        <ItemsControl ItemTemplate="{StaticResource SwatchColorTemplate}" ItemsSource="{Binding Hues}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
     </Grid>
 </UserControl>

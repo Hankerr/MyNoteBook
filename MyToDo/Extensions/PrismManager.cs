@@ -10,6 +10,6 @@ namespace MyToDo.Extensions
     {
         public static readonly string MainViewRegionName = "MainViewRegion";
 
-        public static readonly string SettingsViewRegionName = "SettingsVeiwRegion";
+        public static readonly string SettingsViewRegionName = "SettingsViewRegion";
     }
 }

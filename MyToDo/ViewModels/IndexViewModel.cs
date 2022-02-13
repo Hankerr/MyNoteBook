@@ -1,4 +1,6 @@
-﻿using MyToDo.Common;
+﻿
+using MyToDo.Common;
+using MyToDo.Common.Models;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -13,14 +15,14 @@ namespace MyToDo.ViewModels
     {
         public IndexViewModel()
         {
-            TaskBars = new ObservableCollection<TaskBars>();
+            TaskBars = new ObservableCollection<TaskBar>();
             CreateTaskBars();
             CreateTestData();
         }
 
-        private ObservableCollection<TaskBars> taskBars;
+        private ObservableCollection<TaskBar> taskBars;
 
-        public ObservableCollection<TaskBars> TaskBars
+        public ObservableCollection<TaskBar> TaskBars
         {
             get { return taskBars; }
             set { taskBars = value; RaisePropertyChanged(); }
@@ -44,10 +46,10 @@ namespace MyToDo.ViewModels
 
         private void CreateTaskBars()
         {
-            TaskBars.Add(new TaskBars() { Icon = "ClockFast", Title = "汇总", Content = "9", Color = "#FF0CA0FF", Target = "" });
-            TaskBars.Add(new TaskBars() { Icon = "ClockCheckOutline", Title = "已完成", Content = "9", Color = "#FF1ECA3A", Target = "" });
-            TaskBars.Add(new TaskBars() { Icon = "ChartLineVarient", Title = "完成", Content = "100%", Color = "#FF02C6DC", Target = "" });
-            TaskBars.Add(new TaskBars() { Icon = "PlaylistStar", Title = "备忘录", Content = "19", Color = "#FFFFA000", Target = "" });
+            TaskBars.Add(new TaskBar() { Icon = "ClockFast", Title = "汇总", Content = "9", Color = "#FF0CA0FF", Target = "" });
+            TaskBars.Add(new TaskBar() { Icon = "ClockCheckOutline", Title = "已完成", Content = "9", Color = "#FF1ECA3A", Target = "" });
+            TaskBars.Add(new TaskBar() { Icon = "ChartLineVarient", Title = "完成", Content = "100%", Color = "#FF02C6DC", Target = "" });
+            TaskBars.Add(new TaskBar() { Icon = "PlaylistStar", Title = "备忘录", Content = "19", Color = "#FFFFA000", Target = "" });
         }
 
         private void CreateTestData()

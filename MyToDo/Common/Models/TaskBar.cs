@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyToDo.Common
+namespace MyToDo.Common.Models
 {
-    public class TaskBars : BindableBase
+    public class TaskBar : BindableBase
     {
         private string icon;
         private string title;
@@ -30,7 +30,7 @@ namespace MyToDo.Common
         public string Content
         {
             get { return content; }
-            set { content = value; }
+            set { content = value; RaisePropertyChanged(); }
         }
 
         public string Color

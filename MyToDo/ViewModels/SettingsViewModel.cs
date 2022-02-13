@@ -1,4 +1,4 @@
-﻿using MyToDo.Common;
+﻿using MyToDo.Common.Models;
 using MyToDo.Extensions;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -17,23 +17,22 @@ namespace MyToDo.ViewModels
         public SettingsViewModel(IRegionManager regionManager)
         {
             MenuBars = new ObservableCollection<MenuBar>();
-            CreateMenuBar();
-            NavigateCommand = new DelegateCommand<MenuBar>(Navigite);
             this.regionManager = regionManager;
+            NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
+            CreateMenuBar();
         }
 
-        private void Navigite(MenuBar obj)
+        private void Navigate(MenuBar obj)
         {
             if (obj == null || string.IsNullOrWhiteSpace(obj.NameSpace))
-            {
                 return;
-            }
-            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(obj.NameSpace);
+
+            regionManager.Regions[PrismManager.SettingsViewRegionName].RequestNavigate(obj.NameSpace);
         }
 
         public DelegateCommand<MenuBar> NavigateCommand { get; private set; }
-        private readonly IRegionManager regionManager;
         private ObservableCollection<MenuBar> menuBars;
+        private readonly IRegionManager regionManager;
 
         public ObservableCollection<MenuBar> MenuBars
         {
@@ -41,11 +40,12 @@ namespace MyToDo.ViewModels
             set { menuBars = value; RaisePropertyChanged(); }
         }
 
+
         void CreateMenuBar()
         {
-            MenuBars.Add(new MenuBar() { Icon = "Home", Title = "个性化", NameSpace = "SkinView" });
-            MenuBars.Add(new MenuBar() { Icon = "NotebookOutline", Title = "系统设置", NameSpace = "" });
-            MenuBars.Add(new MenuBar() { Icon = "NotebookPlus", Title = "关于更多", NameSpace = "AboutView" });
+            MenuBars.Add(new MenuBar() { Icon = "Palette", Title = "个性化", NameSpace = "SkinView" });
+            MenuBars.Add(new MenuBar() { Icon = "Cog", Title = "系统设置", NameSpace = "" });
+            MenuBars.Add(new MenuBar() { Icon = "Information", Title = "关于更多", NameSpace = "AboutView" });
         }
     }
 }
