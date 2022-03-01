@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Arch.EntityFrameworkCore.UnitOfWork;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MyToDo.Api.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,15 +19,22 @@ namespace MyToDo.Api.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IUnitOfWork unitOfWork;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger
+            , IUnitOfWork unitOfWork
+            )
         {
             _logger = logger;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            var service = unitOfWork.GetRepository<User>();
+            var result = service.GetAll();
+            
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

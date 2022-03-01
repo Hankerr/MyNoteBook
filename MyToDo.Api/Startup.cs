@@ -1,3 +1,4 @@
+using Arch.EntityFrameworkCore.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyToDo.Api.Context;
+using MyToDo.Api.Context.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +34,10 @@ namespace MyToDo.Api
             {
                 var connectionstring = Configuration.GetConnectionString("ToDoConnection");
                 option.UseSqlite(connectionstring);
-            });
+            }).AddUnitOfWork<MyToDoContext>()
+            .AddCustomRepository<ToDo,ToDoRepository>()
+            .AddCustomRepository<Memo, MemoRepository>()
+            .AddCustomRepository<User, UserRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
